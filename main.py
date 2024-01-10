@@ -45,10 +45,13 @@ async def encode_message(interaction: discord.Interaction, message: str):
 
 @client.tree.context_menu(name="Decode")
 async def decode_message(interaction: discord.Interaction, message: discord.Message):
-    decoded_data = ''.join(reverse_emoji_dict[c] for c in message.content)
-    decoded_rot13 = codecs.decode(decoded_data, 'rot_13')
-    decoded_message = base64.b64decode(decoded_rot13).decode('utf-8')
-    await interaction.response.send_message(f'**Decoded Message:**\n{decoded_message}', ephemeral=True)
+    try:
+        decoded_data = ''.join(reverse_emoji_dict[c] for c in message.content)
+        decoded_rot13 = codecs.decode(decoded_data, 'rot_13')
+        decoded_message = base64.b64decode(decoded_rot13).decode('utf-8')
+        await interaction.response.send_message(f'**Decoded Message:**\n{decoded_message}', ephemeral=True)
+    except KeyError:
+        await interaction.response.send_message("Can't decode this message.", ephemeral=True)
 
 def run_discord_bot():
     try:
