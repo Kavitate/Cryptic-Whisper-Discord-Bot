@@ -5,7 +5,7 @@ A Discord bot that converts your chat messages into a secret language by first t
 
 Because the bot converts all text to emojis, it also makes the text unsearchable within Discord.
 
-Since this repo is public, it's OBVIOUSLY a good idea to swap the emojis out with whichever ones you want to use to ensure it can't be easily decoded.
+Since this repo is public, it's OBVIOUSLY a good idea to change the encoding and swap the emojis out with whichever ones you want to use to ensure it can't be easily decoded.
 
 ## Variables
 Prior to using the bot, the following variable must be changed in the `config.json` file:
@@ -21,25 +21,25 @@ After the message has been sent or someone else has sent a message:
 ## Example
 First, use the `/encode` command and type the message you want to scramble.
 <p align="center">
-  <img src="https://i.imgur.com/c6TvzWp.png">
+  <img src="https://i.imgur.com/wMEVhPY.png">
 </p>
 <br><br>
 
 This is what the scambled message looks like.
 <p align="center">
-  <img src="https://i.imgur.com/Uejb29K.png">
+  <img src="https://i.imgur.com/j9Hlp0I.png">
 </p>
 <br><br>
 
 To decode it, right click on the scambled message, hover over `Apps`, and select `Decode`.
 <p align="center">
-  <img src="https://i.imgur.com/9UqQKKk.png">
+  <img src="https://i.imgur.com/06VfK1Y.png">
 </p>
 <br><br>
 
 Now, you have a decoded message from the bot that only you can see.
 <p align="center">
-  <img src="https://i.imgur.com/ibRpBfN.png">
+  <img src="https://i.imgur.com/81b8tRF.png">
 </p>
 
 ## Credits
