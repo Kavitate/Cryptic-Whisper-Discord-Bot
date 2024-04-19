@@ -38,19 +38,35 @@ client = TranslateBot()
 
 @client.tree.command(name="encode", description="Encode a message.")
 async def encode_message(interaction: discord.Interaction, message: str):
-    encoded_base64 = base64.b64encode(message.encode()).decode()
+    # Add the username to the message
+    message_with_username = f"**{interaction.user.name}:** \n{message}"
+
+    encoded_base64 = base64.b64encode(message_with_username.encode()).decode()
     encoded_rot13 = codecs.encode(encoded_base64, 'rot_13')
     scrambled_message = ''.join(emoji_dict[c] for c in encoded_rot13)
-    await interaction.response.send_message(scrambled_message)
+
+    # Send an ephemeral confirmation
+    await interaction.response.send_message("**Message encoded and sent!**", ephemeral=True)
+
+    # Send the message in the channel
+    await interaction.channel.send(f"**{interaction.user.name}:** \n{scrambled_message}")
 
 @client.tree.context_menu(name="Decode")
 async def decode_message(interaction: discord.Interaction, message: discord.Message):
     try:
-        decoded_data = ''.join(reverse_emoji_dict[c] for c in message.content)
+        # Split the message content into username and encoded message
+        username, encoded_message = message.content.split('\n', 1)
+
+        # Decode the message
+        decoded_data = ''.join(reverse_emoji_dict[c] for c in encoded_message)
         decoded_rot13 = codecs.decode(decoded_data, 'rot_13')
-        decoded_message = base64.b64decode(decoded_rot13).decode('utf-8')
-        await interaction.response.send_message(f'**Decoded Message:**\n{decoded_message}', ephemeral=True)
-    except KeyError:
+        decoded_base64 = base64.b64decode(decoded_rot13).decode('utf-8')
+
+        # Remove the username from the decoded message
+        decoded_message = decoded_base64.replace(f"{username}: \n", '')
+
+        await interaction.response.send_message(f'{decoded_message}', ephemeral=True)
+    except (KeyError, ValueError):
         await interaction.response.send_message("Can't decode this message.", ephemeral=True)
 
 def run_discord_bot():
@@ -63,3 +79,4 @@ def run_discord_bot():
 
 if __name__ == "__main__":
     run_discord_bot()
+    
